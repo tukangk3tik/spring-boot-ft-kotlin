@@ -1,4 +1,4 @@
-## Next step - 4. Desain Layer Aplikasi
+### Original by Eko Kurniawan Khannedy
 
 # API Spec
 
