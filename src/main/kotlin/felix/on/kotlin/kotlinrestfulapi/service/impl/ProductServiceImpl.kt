@@ -5,18 +5,24 @@ import felix.on.kotlin.kotlinrestfulapi.model.CreateProductRequest
 import felix.on.kotlin.kotlinrestfulapi.model.ProductResponse
 import felix.on.kotlin.kotlinrestfulapi.repository.ProductRepository
 import felix.on.kotlin.kotlinrestfulapi.service.ProductService
+import felix.on.kotlin.kotlinrestfulapi.validation.ValidationUtils
 import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class ProductServiceImpl(val productRepository: ProductRepository): ProductService {
+class ProductServiceImpl(
+    val productRepository: ProductRepository,
+    val validationUtil : ValidationUtils
+): ProductService {
 
     override fun create(createProductRequest: CreateProductRequest): ProductResponse {
+        validationUtil.validate(createProductRequest)
+
         val product = Product(
-            id = createProductRequest.id,
-            name = createProductRequest.name,
-            price = createProductRequest.price,
-            quantity = createProductRequest.quantity,
+            id = createProductRequest.id!!,
+            name = createProductRequest.name!!,
+            price = createProductRequest.price!!,
+            quantity = createProductRequest.quantity!!,
             createdAt = Date(),
             updatedAt = null
         )
