@@ -1,0 +1,23 @@
+POST http://localhost:8080/api/products
+Content-Type: application/json
+Accept: application/json
+
+{
+  "id": "A0001",
+  "name": "Lenovo Idepad Flex 5",
+  "price": 12500000,
+  "quantity": 20
+}
+
+###
+
+POST http://localhost:8080/api/products
+Content-Type: application/json
+Accept: application/json
+
+{
+"id": "",
+"name": "",
+"price": 0,
+"quantity": -10
+}
