@@ -4,9 +4,7 @@ import felix.on.kotlin.kotlinrestfulapi.model.CreateProductRequest
 import felix.on.kotlin.kotlinrestfulapi.model.ProductResponse
 import felix.on.kotlin.kotlinrestfulapi.model.WebResponse
 import felix.on.kotlin.kotlinrestfulapi.service.ProductService
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 class ProductController(val productService: ProductService) {
@@ -19,6 +17,19 @@ class ProductController(val productService: ProductService) {
     fun createProduct(@RequestBody body: CreateProductRequest) : WebResponse<ProductResponse> {
         val productResponse = productService.create(body)
 
+        return WebResponse(
+            code = 200,
+            status = "OK",
+            data = productResponse
+        )
+    }
+
+    @GetMapping(
+        value = ["/api/products/{idProduct}"],
+        produces = ["application/json"]
+    )
+    fun getProduct(@PathVariable("idProduct") id: String): WebResponse<ProductResponse> {
+        val productResponse = productService.get(id)
         return WebResponse(
             code = 200,
             status = "OK",
