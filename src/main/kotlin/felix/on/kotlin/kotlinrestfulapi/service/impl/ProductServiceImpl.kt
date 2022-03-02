@@ -4,6 +4,7 @@ import felix.on.kotlin.kotlinrestfulapi.entity.Product
 import felix.on.kotlin.kotlinrestfulapi.error.NotFoundException
 import felix.on.kotlin.kotlinrestfulapi.model.CreateProductRequest
 import felix.on.kotlin.kotlinrestfulapi.model.ProductResponse
+import felix.on.kotlin.kotlinrestfulapi.model.UpdateProductRequest
 import felix.on.kotlin.kotlinrestfulapi.repository.ProductRepository
 import felix.on.kotlin.kotlinrestfulapi.service.ProductService
 import felix.on.kotlin.kotlinrestfulapi.validation.ValidationUtils
@@ -35,11 +36,37 @@ class ProductServiceImpl(
     }
 
     override fun get(id: String): ProductResponse {
-        val product = productRepository.findByIdOrNull( id)
+        val product = findProductByIdOrThrowNotFound(id)
+        return convertProductToProductResponse(product)
+    }
+
+    override fun update(id: String, updateProductRequest: UpdateProductRequest): ProductResponse {
+        val product = findProductByIdOrThrowNotFound(id)
+        validationUtil.validate(updateProductRequest)
+
+        product.apply {
+            name = updateProductRequest.name!!
+            price = updateProductRequest.price!!
+            quantity = updateProductRequest.quantity!!
+            updatedAt = Date()
+        }
+
+        productRepository.save(product)
+
+        return convertProductToProductResponse(product)
+    }
+
+    override fun delete(id: String) {
+        val product = findProductByIdOrThrowNotFound(id)
+        productRepository.delete(product)
+    }
+
+    private fun findProductByIdOrThrowNotFound(id: String): Product {
+        val product = productRepository.findByIdOrNull(id)
         if (product == null) {
-             throw NotFoundException()
+            throw NotFoundException()
         } else {
-            return convertProductToProductResponse(product)
+            return product
         }
     }
 

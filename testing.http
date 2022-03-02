@@ -33,3 +33,45 @@ Accept: application/json
 
 GET http://localhost:8080/api/products/ASALAN
 Accept: application/json
+
+
+### UPDATE Product
+
+PUT http://localhost:8080/api/products/A0001
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Lenovo Yoga Flex 5",
+  "price": 11500000,
+  "quantity": 15
+}
+
+### UPDATE invalid Product
+
+PUT http://localhost:8080/api/products/SALAH
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Lenovo Yoga Flex 5",
+  "price": 11500000,
+  "quantity": 15
+}
+
+### UPDATE Product with invalid body
+
+PUT http://localhost:8080/api/products/A0001
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "",
+  "price": 0,
+  "quantity": -10
+}
+
+### Delete product
+
+DELETE http://localhost:8080/api/products/A0001
+Accept: application/json
