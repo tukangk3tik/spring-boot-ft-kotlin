@@ -1,19 +1,21 @@
 ### Create Product
 
 POST http://localhost:8080/api/products
+X-Api-Key: SECRET
 Content-Type: application/json
 Accept: application/json
 
 {
-  "id": "A0001",
-  "name": "Lenovo Idepad Flex 5",
-  "price": 12500000,
+  "id": "A0002",
+  "name": "Macbook Pro M1",
+  "price": 20000000,
   "quantity": 20
 }
 
 ### Create Product Invalid
 
 POST http://localhost:8080/api/products
+X-Api-Key: SECRET
 Content-Type: application/json
 Accept: application/json
 
@@ -27,17 +29,20 @@ Accept: application/json
 ### Get product
 
 GET http://localhost:8080/api/products/A0001
+X-Api-Key: SECRET
 Accept: application/json
 
 ### Get product invalid
 
 GET http://localhost:8080/api/products/ASALAN
+X-Api-Key: SECRET
 Accept: application/json
 
 
 ### UPDATE Product
 
 PUT http://localhost:8080/api/products/A0001
+X-Api-Key: SECRET
 Content-Type: application/json
 Accept: application/json
 
@@ -50,6 +55,7 @@ Accept: application/json
 ### UPDATE invalid Product
 
 PUT http://localhost:8080/api/products/SALAH
+X-Api-Key: SECRET
 Content-Type: application/json
 Accept: application/json
 
@@ -62,6 +68,7 @@ Accept: application/json
 ### UPDATE Product with invalid body
 
 PUT http://localhost:8080/api/products/A0001
+X-Api-Key: SECRET
 Content-Type: application/json
 Accept: application/json
 
@@ -74,4 +81,18 @@ Accept: application/json
 ### Delete product
 
 DELETE http://localhost:8080/api/products/A0001
+X-Api-Key: SECRET
+Accept: application/json
+
+### LIST products
+
+GET http://localhost:8080/api/products
+X-Api-Key: SECRET
+Accept: application/json
+
+
+### LIST products with size and page parameter
+
+GET http://localhost:8080/api/products?size=5&page=1
+X-Api-Key: SECRET
 Accept: application/json

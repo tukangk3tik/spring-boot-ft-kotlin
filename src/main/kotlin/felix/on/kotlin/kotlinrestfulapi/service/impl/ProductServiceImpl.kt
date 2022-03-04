@@ -1,5 +1,6 @@
 package felix.on.kotlin.kotlinrestfulapi.service.impl
 
+import felix.on.kotlin.kotlinrestfulapi.entity.ListProductRequest
 import felix.on.kotlin.kotlinrestfulapi.entity.Product
 import felix.on.kotlin.kotlinrestfulapi.error.NotFoundException
 import felix.on.kotlin.kotlinrestfulapi.model.CreateProductRequest
@@ -8,9 +9,11 @@ import felix.on.kotlin.kotlinrestfulapi.model.UpdateProductRequest
 import felix.on.kotlin.kotlinrestfulapi.repository.ProductRepository
 import felix.on.kotlin.kotlinrestfulapi.service.ProductService
 import felix.on.kotlin.kotlinrestfulapi.validation.ValidationUtils
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import java.util.*
+import java.util.stream.Collectors
 
 @Service
 class ProductServiceImpl(
@@ -59,6 +62,12 @@ class ProductServiceImpl(
     override fun delete(id: String) {
         val product = findProductByIdOrThrowNotFound(id)
         productRepository.delete(product)
+    }
+
+    override fun list(listProductRequest: ListProductRequest): List<ProductResponse> {
+        val page = productRepository.findAll(PageRequest.of(listProductRequest.page, listProductRequest.size))
+        val product: List<Product> = page.get().collect(Collectors.toList())
+        return product.map { convertProductToProductResponse(it) }
     }
 
     private fun findProductByIdOrThrowNotFound(id: String): Product {

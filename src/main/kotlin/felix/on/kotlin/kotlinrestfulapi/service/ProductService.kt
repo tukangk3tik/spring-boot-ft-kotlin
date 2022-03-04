@@ -1,5 +1,6 @@
 package felix.on.kotlin.kotlinrestfulapi.service
 
+import felix.on.kotlin.kotlinrestfulapi.entity.ListProductRequest
 import felix.on.kotlin.kotlinrestfulapi.model.CreateProductRequest
 import felix.on.kotlin.kotlinrestfulapi.model.ProductResponse
 import felix.on.kotlin.kotlinrestfulapi.model.UpdateProductRequest
@@ -14,4 +15,5 @@ interface ProductService {
 
     fun delete(id: String)
 
+    fun list(listProductRequest: ListProductRequest): List<ProductResponse>
 }

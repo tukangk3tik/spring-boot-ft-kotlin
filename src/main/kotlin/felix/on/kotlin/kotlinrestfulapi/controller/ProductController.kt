@@ -1,5 +1,6 @@
 package felix.on.kotlin.kotlinrestfulapi.controller
 
+import felix.on.kotlin.kotlinrestfulapi.entity.ListProductRequest
 import felix.on.kotlin.kotlinrestfulapi.model.CreateProductRequest
 import felix.on.kotlin.kotlinrestfulapi.model.ProductResponse
 import felix.on.kotlin.kotlinrestfulapi.model.UpdateProductRequest
@@ -65,6 +66,22 @@ class ProductController(val productService: ProductService) {
             code = 200,
             status = "OK",
             data = id
+        )
+    }
+
+    @GetMapping(
+        value = ["/api/products"],
+        produces = ["application/json"]
+    )
+    fun listProducts(@RequestParam(value = "size", defaultValue = "10") size: Int,
+                     @RequestParam(value = "page", defaultValue = "0") page: Int
+    ): WebResponse<List<ProductResponse>> {
+        val request = ListProductRequest(page = page, size = size)
+        val response = productService.list(request)
+        return WebResponse(
+            code = 200,
+            status = "OK",
+            data = response
         )
     }
 }
